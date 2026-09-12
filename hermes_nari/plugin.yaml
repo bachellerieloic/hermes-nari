@@ -1,0 +1,12 @@
+# Hermes plugin manifest. This copy at the repository root serves
+# `hermes plugins install bachellerieloic/hermes-nari` and a checkout dropped into
+# ~/.hermes/plugins/nari; hermes_nari/plugin.yaml is the identical copy for installing
+# the package directory on its own. pip installs use the hermes_agent.plugins entry point.
+name: nari
+version: 0.1.0
+description: "Nari Labs hosted speech: Qwen3 text-to-speech and realtime speech-to-text providers for Hermes (free tier available)."
+author: Loic Bachellerie
+kind: backend
+requires_env:
+  - NARI_API_KEY
+hooks: []

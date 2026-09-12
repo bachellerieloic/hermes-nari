@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hermes-nari"
+version = "0.1.0"
+description = "Nari Labs speech-to-text and text-to-speech providers for Hermes Agent"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Loic Bachellerie" }]
+requires-python = ">=3.11"
+dependencies = [
+    "websockets>=14",
+    "pyyaml>=6",
+]
+keywords = ["hermes-agent", "nari", "tts", "stt", "speech", "voice", "qwen3"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+]
+
+[project.urls]
+Homepage = "https://github.com/bachellerieloic/hermes-nari"
+"Nari Labs docs" = "https://docs.narilabs.com/"
+"Hermes plugins" = "https://hermes-agent.nousresearch.com/docs/user-guide/features/plugins"
+
+[project.scripts]
+hermes-nari = "hermes_nari.cli:main"
+
+# Hermes discovers pip-installed plugins through this group and calls register(ctx)
+# on the module.
+[project.entry-points."hermes_agent.plugins"]
+nari = "hermes_nari"
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["hermes_nari"]
+
+[tool.hatch.build.targets.sdist]
+include = ["hermes_nari", "tests", "plugin.yaml", "README.md", "LICENSE", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --import-mode=importlib"
+pythonpath = ["."]

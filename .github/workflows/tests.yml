@@ -1,0 +1,26 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Confirm ffmpeg is present (GitHub's Ubuntu images ship it; tests needing it skip otherwise)
+        run: ffmpeg -version | head -n 1 || echo "ffmpeg missing, the tests that need it will skip"
+      - name: Install the plugin with its test dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -e ".[dev]"
+      - name: Run the test suite
+        run: python -m pytest
+      - name: Confirm the package builds
+        run: python -m pip install build && python -m build --wheel --outdir dist/
