@@ -86,7 +86,7 @@ tts:
   providers:
     nari:
       type: command            # <- remove this whole entry
-      command: python3 /opt/data/bin/nari-speak.py {input_path} {output_path} {voice}
+      command: python3 /path/to/nari-speak.py {input_path} {output_path} {voice}
 ```
 
 The same applies to `stt.providers.nari` with `type: command`. Delete both, keep the plain settings
